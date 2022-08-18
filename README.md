@@ -1,5 +1,4 @@
 # Book-CRUD
-![alt tag](https://raw.githubusercontent.com/ipankajchaudhary/MyCrypto-FrontEnd/main/public/favicon.ico)
 
 # `Glimpses of the UI`
  
