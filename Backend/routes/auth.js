@@ -38,12 +38,12 @@ router.post('/createuser', [
                 id:user.id
             }
         }
-
+        
         const authtoken = jwt.sign(data, Jwt_SECRET);
         // console.log(auth-token)
 
 
-        res.json({ authtoken })
+      res.send(req.body);
     }
 
     catch (error) {
