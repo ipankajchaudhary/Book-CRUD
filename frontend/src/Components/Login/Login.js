@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 
 const Login = ({ changeloggedin, changeauthtoken }) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" })
-  let history = useNavigate();
+  // let history = useNavigate();
   const [wrongcredentials, setwrongcredentials] = useState("false")
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +20,7 @@ const Login = ({ changeloggedin, changeauthtoken }) => {
     if (json.error !== "Wrong Credentials") {
       changeauthtoken(json.authtoken)
       localStorage.setItem('token', json.authtoken);
-      history.push("/");
+      // history("/Books");
       changeloggedin("true");
       // console.log("Logged in")
       // console.log(localStorage.getItem('token'))
@@ -59,7 +59,7 @@ const Login = ({ changeloggedin, changeauthtoken }) => {
         <div className="login">
           <div className="LoginTitle"> <h3><b> Log In</b></h3></div>
           <div className="New">New to MyCrypto?
-            <Link to="/SignUp" style={{ textDecoration: "none" }}> Create an account</Link></div>
+            {/*<Link to="/SignUp" style={{ textDecoration: "none" }}> Create an account</Link> */}</div>
           <br />
           <form >
             <div className="mb-3">
