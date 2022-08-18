@@ -49,7 +49,7 @@ return (
     <div style={{ height: "90vh" }}>
         <div className="signup">
             <div className="Head"> <h3><b> Create an account</b></h3></div>
-            <div className="New">Gain access to additional features such as Watchlist and Portfolio tracking.
+            <div className="New">
                 <br />Already have an account?
                 <Link to="/" style={{ textDecoration: "none" }}> Log In</Link></div>
             <form >
