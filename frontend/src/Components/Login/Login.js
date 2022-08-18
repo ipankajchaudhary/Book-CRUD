@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Loginstyle.css";
-import { Link, useNavigate } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 
 const Login = ({ changeloggedin, changeauthtoken }) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" })
@@ -20,7 +20,7 @@ const Login = ({ changeloggedin, changeauthtoken }) => {
     if (json.error !== "Wrong Credentials") {
       changeauthtoken(json.authtoken)
       localStorage.setItem('token', json.authtoken);
-      // history("/Books");
+      // history("/Books",  { replace: true });
       changeloggedin("true");
       // console.log("Logged in")
       // console.log(localStorage.getItem('token'))
@@ -59,7 +59,7 @@ const Login = ({ changeloggedin, changeauthtoken }) => {
         <div className="login">
           <div className="LoginTitle"> <h3><b> Log In</b></h3></div>
           <div className="New">New to MyCrypto?
-            {/*<Link to="/SignUp" style={{ textDecoration: "none" }}> Create an account</Link> */}</div>
+          <Navigate to="/SignUp" style={{ textDecoration: "none" }}> Create an account</Navigate></div>
           <br />
           <form >
             <div className="mb-3">
