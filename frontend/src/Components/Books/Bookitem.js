@@ -1,74 +1,82 @@
-
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import bookContext from '../../Context/bookContext';
-
-
 const Bookitem = (props) => {
-    const context = useContext(bookContext);
-    const { deleteBook } = context;
-    // eslint-disable-next-line
-    const { book, updateBook } = props;
-    const { currentBalance, setcurrentBalance , currentcurrency} = props;
-    const [coins, setCoins] = useState([])
+    
+  const context = useContext(bookContext);
+  const [editbook, seteditbook] = useState({name : "", imageurl : "", author : "", pages : "", price : "" })
+  const onChange = (e) => {
+    seteditbook({ ...editbook, [e.target.name]: e.target.value })
+  }
 
+  const { key, data } = props;
 
-    useEffect(() => {
-
-        const fetchData1 = async () => {
-            const response = await axios.get("https://api.coingecko.com/api/v3/coins/markets", {
-                params: {
-                    vs_currency: currentcurrency,
-                    ids: book.coinid
-                }
-            })
-            setCoins(response.data);
-        }
-        fetchData1();
-        // eslint-disable-next-line
-    }, [currentcurrency])
-
-    const handledelete = () => {
-        if (coins[0]) {
-            setcurrentBalance(currentBalance - (book.amount * coins[0].current_price))
-            localStorage.setItem('currentBalance', currentBalance)
-            deleteBook(book._id)
-        }
+  const { editBook, deleteBook } = context;
+  const editmybook = (e) => {
+    e.preventDefault();
+    editBook(data._id, editbook.name, editbook.imageurl, editbook.author, editbook.pages, editbook.price);
+    seteditbook({ ...editbook, [e.target.name]: e.target.value })
     }
-    var stylingObject = {
-        td: {
-            textAlign:"left"
-        },
-        dw:{
-            textAlign:"left",
-            width: "16%"
-        }
-    }
-    const render = () => {
-        if (book.coinid && coins[0]) {
-            return (<>
-                    <table className="table container">
-                        <tbody>
-                            <tr >
-                                <td style={stylingObject.dw}><i className="far fa-trash-alt mx-2" onClick={handledelete}></i></td>
-                                <td style={stylingObject.td}>{book.coinid}</td>
-                                <td style={stylingObject.td}>{book.amount}</td>
-                                <td style={stylingObject.td}>{(currentcurrency==="inr")?"₹":"$"}&nbsp;{coins[0].current_price}</td>
-                                <td style={stylingObject.td}>{(currentcurrency==="inr")?"₹":"$"}&nbsp;{book.amount * coins[0].current_price}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </>
+    const deletemybook = () => {
+        deleteBook(data._id);
+}
+  return (
+      <>
+          <div className="container my-5">
+          <div className="card" style={{ "width": "18rem" }}>
+            <img src={data.imageurl} className="card-img-top" alt="..."/>
+            <div className="card-body">
+                <h5 className="card-title">Name : {data.name}</h5>
+                  <p className="card-text">Author : {data.author}</p>
+                  <p className="card-text">Price : {data.price}</p>
+                      <p className="card-text">Pages : {data.pages}</p>
+                      
+                      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+          Edit Book
+                      </button>
+                      <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Edit Book</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <label htmlFor="exampleInputEmail1" className="form-label"> <b> Name</b></label>
+                
+                <input type="text" className="form-control for-email" style={{ borderRadius: "10px" }} defaultValue={editbook.name} onChange={onChange} id="emailHelp" name="name" placeholder="Enter name of book"
+                  aria-describedby="emailHelp" autoComplete="on" />
+                
+                <label htmlFor="exampleInputEmail1" className="form-label"> <b> Image Url</b></label>
 
-            )
-        }
-    }
+                <input type="text" className="form-control for-email" style={{ borderRadius: "10px" }} value={editbook.imageurl} onChange={onChange} id="emailHelp" name="imageurl" placeholder="Enter Image URL of book" aria-describedby="emailHelp" autoComplete="on" />
 
+                <label htmlFor="exampleInputEmail1" className="form-label"> <b> Author</b></label>
 
-    return (
-        <>   {render()}
-        </>
-    )
+                <input type="text" className="form-control for-email" style={{ borderRadius: "10px" }} value={editbook.author} onChange={onChange} id="emailHelp" name="author" placeholder="Enter Author of book" aria-describedby="emailHelp" autoComplete="on" />
+
+                <label htmlFor="exampleInputEmail1" className="form-label"> <b> Pages</b></label>
+
+                <input type="number" className="form-control for-email" style={{ borderRadius: "10px" }} value={editbook.pages} onChange={onChange} id="emailHelp" name="pages" placeholder="Enter Pages of book" aria-describedby="emailHelp" autoComplete="on" />
+
+                <label htmlFor="exampleInputEmail1" className="form-label"> <b> Prices</b></label>
+
+                <input type="number" className="form-control for-email" style={{ borderRadius: "10px" }} value={editbook.price} onChange={onChange} id="emailHelp" name="price" placeholder="Enter Price of book" aria-describedby="emailHelp" autoComplete="on" />
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-primary" onClick={editmybook}>Save changes</button>
+              </div>
+            </div>
+          </div>
+                      </div>
+                      <button type = "button" className="btn btn-primary mx-2" onClick = {deletemybook}>Delete</button>
+
+       
+            </div>
+              </div>
+              </div>
+      </>
+  )
 }
 
 export default Bookitem

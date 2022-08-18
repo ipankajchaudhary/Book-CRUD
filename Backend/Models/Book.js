@@ -13,7 +13,7 @@ const BookSchema = new Schema({
         ref: 'user'
     },
     name: {
-        type: Number,
+        type: String,
         required: true
     },
     imageurl: {

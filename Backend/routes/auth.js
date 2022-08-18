@@ -43,7 +43,7 @@ router.post('/createuser', [
         // console.log(auth-token)
 
 
-      res.send(req.body);
+      res.send({ authtoken });
     }
 
     catch (error) {

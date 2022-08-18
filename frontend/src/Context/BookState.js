@@ -3,7 +3,6 @@ import {  useState } from "react";
 
 const BookState = (props) => {
   const host = 
-    // "https://git.heroku.com/my--crypto.git"
     "http://localhost:5000"
   const booksInitial = []
   const [books, setBooks] = useState(booksInitial)
@@ -23,7 +22,7 @@ const BookState = (props) => {
   }
 
   // Add a Book
-  const addBook = async (coinid, amount) => {
+  const addBook = async (name, imageurl, author, pages, price) => {
     // TODO: API Call
     // API Call 
     const response = await fetch(`${host}/api/book/addbook`, {
@@ -32,7 +31,7 @@ const BookState = (props) => {
         'Content-Type': 'application/json',
         "auth-token": localStorage.getItem('token')
       },
-      body: JSON.stringify({coinid, amount})
+      body: JSON.stringify({name, imageurl, author, pages, price})
     });
 
     const book = await response.json();
@@ -56,7 +55,7 @@ const BookState = (props) => {
   }
 
   // Edit a Book
-  const editBook = async (id, coinid, amount) => {
+  const editBook = async (id, name, imageurl, author, pages, price) => {
     // API Call 
     const response = await fetch(`${host}/api/book/updatebook/${id}`, {
       method: 'PUT',
@@ -64,7 +63,7 @@ const BookState = (props) => {
         'Content-Type': 'application/json',
         "auth-token": localStorage.getItem('token')
       },
-      body: JSON.stringify({coinid, amount})
+      body: JSON.stringify({name, imageurl, author, pages, price})
     });
     // eslint-disable-next-line
     const json = await response.json(); 
@@ -74,8 +73,11 @@ const BookState = (props) => {
     for (let index = 0; index < newBooks.length; index++) {
       const element = newBooks[index];
       if (element._id === id) {
-        newBooks[index].coinid = coinid;
-        newBooks[index].amount = amount;
+        newBooks[index].name = name;
+        newBooks[index].imageurl = imageurl;
+        newBooks[index].author = price;
+        newBooks[index].pages = pages;
+        newBooks[index].price = price;
         break; 
       }
     }  
